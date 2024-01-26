@@ -1,5 +1,6 @@
 <?php
 include_once '../config/autoload.php';
+include_once '../config/database.php';
 
 class Zoo
 {
@@ -47,8 +48,15 @@ if (
     $zooName = $_POST['zooName'];
     $newZoo = new Zoo($zooName, $newEmployee);
     
-    
+    // public function addZoo () {
+    //   $request = 
+    // }
+
+    $zooManager = new ZooManager($database);
     var_dump($newZoo);
+    // var_dump($zooManager->addZoo($newZoo));
+    var_dump($zooManager->find($newZoo));
+
 }
 
 ?>
