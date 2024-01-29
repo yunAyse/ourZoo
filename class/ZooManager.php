@@ -11,38 +11,35 @@ class ZooManager {
     $this->db = $db;
   }
 
-  public function find(Zoo $zoo) {
+  public function checkZoo(Zoo $zoo) {
     $request = $this->db->prepare("SELECT * FROM zoo WHERE name_zoo = :name_zoo");
-    $request->bindValue(':name_zoo', $zoo->getName());
-    $request->execute();
-    $zooFind = $request->fetchAll();
-
-
-    if ($zooFind) {
-      $zooName = $zooFind['id'];
-      return $zooName;
-    } 
-
-    var_dump($zooFind);
-
+    $request->execute([
+      'name_zoo' => $zoo->getName()
+    ]);
+    $result = $request->fetchAll();
+    return $result;
   }
 
+  
   public function addZoo(Zoo $zoo) {
 
-    
-    // if () {
-    //   $request = $this->db->prepare("INSERT INTO zoo (name_zoo) VALUES (:name_zoo) ");
-    //   $request->execute([
-    //     'name_zoo' => $zoo->getName(),
-    //   ]);
-    // }
+    $existingZoo = $this->checkZoo($zoo);
 
-    
+    if (empty($existingZoo)) {
+      $request = $this->db->prepare("INSERT INTO zoo (name_zoo) VALUES (:name_zoo)");
+      $request->execute([
+            'name_zoo' => $zoo->getName(),
+          ]);
+
+          $id = $this->db->lastInsertId();
+          $zoo->setId($id);
+
+          header('Location: ./class/Zoo.php');
+    } else {
+      header('Location: ./class/Zoo.php');
+    }
     
   }
-
-
-
 
 
 }

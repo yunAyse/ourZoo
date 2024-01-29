@@ -4,15 +4,25 @@ include_once '../config/database.php';
 
 class Zoo
 {
+  private $id;
   private string $name;
-  private object $employee;
-  private int $enclosureNum = 10;
+  private Employee $employee;
+  private int $enclosureMax = 10;
   private array $enclosures = [];
+
 
   public function __construct($name, array $Employee)
   {
     $this->name = $name;
     $this->employee = new Employee($Employee['name'], $Employee['age'], $Employee['genre']);
+  }
+
+  public function setId($id) {
+    $this->id = $id;
+  }
+
+  public function getId() {
+    return $this->id;
   }
 
   public function getName()
@@ -24,6 +34,20 @@ class Zoo
     return $this->employee;
   }
 
+  public function showEnclosureContent() {
+
+  }
+
+  public function showAnimalNum() {
+
+  }
+
+  public function main () {
+    while (1) {
+      // animal setter random
+      // animal 
+    }
+  } 
 
 }
 
@@ -54,8 +78,7 @@ if (
 
     $zooManager = new ZooManager($database);
     var_dump($newZoo);
-    // var_dump($zooManager->addZoo($newZoo));
-    var_dump($zooManager->find($newZoo));
+    
 
 }
 
@@ -67,11 +90,11 @@ if (
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ourZoo</title>
+  <title><?php echo $newZoo->getName()?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
-<body>
+<body style="padding: 30px;">
   <header>
     <nav class="navbar bg-body-tertiary fixed-top">
       <div class="container-fluid">
